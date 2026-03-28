@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { contractorApi } from '../services/index';
+import TrustBadge from '../components/TrustBadge';
 
 const ContractorDashboard = () => {
   const { user } = useSelector(state => state.auth);
@@ -17,20 +18,20 @@ const ContractorDashboard = () => {
 
   const [jobApplicants, setJobApplicants] = useState({
     1: [
-      { id: 101, workerName: 'Vikram Sharma', skills: 'Masonry, Carpentry', rating: 4.7, experience: '8 years', phone: '9876543210', status: 'pending', jobsCompleted: 24 },
-      { id: 102, workerName: 'Deepak Roy', skills: 'Masonry', rating: 4.5, experience: '5 years', phone: '9876543211', status: 'pending', jobsCompleted: 15 },
-      { id: 103, workerName: 'Sunil Kumar', skills: 'Masonry, Painting', rating: 4.9, experience: '10 years', phone: '9876543212', status: 'accepted', jobsCompleted: 32 }
+      { id: 101, workerName: 'Vikram Sharma', skills: 'Masonry, Carpentry', rating: 4.7, experience: '8 years', phone: '9876543210', status: 'pending', jobsCompleted: 24, verificationLevel: 'Silver', trustScore: 4.7, verifiedJobs: 22 },
+      { id: 102, workerName: 'Deepak Roy', skills: 'Masonry', rating: 4.5, experience: '5 years', phone: '9876543211', status: 'pending', jobsCompleted: 15, verificationLevel: 'Bronze', trustScore: 4.5, verifiedJobs: 14 },
+      { id: 103, workerName: 'Sunil Kumar', skills: 'Masonry, Painting', rating: 4.9, experience: '10 years', phone: '9876543212', status: 'accepted', jobsCompleted: 32, verificationLevel: 'Gold', trustScore: 4.9, verifiedJobs: 30 }
     ],
     2: [
-      { id: 201, workerName: 'Prakash Singh', skills: 'Electrical Wiring', rating: 4.6, experience: '6 years', phone: '9876543220', status: 'pending', jobsCompleted: 18 },
-      { id: 202, workerName: 'Akhil Verma', skills: 'Electrical, Cable', rating: 4.4, experience: '4 years', phone: '9876543221', status: 'rejected', jobsCompleted: 10 }
+      { id: 201, workerName: 'Prakash Singh', skills: 'Electrical Wiring', rating: 4.6, experience: '6 years', phone: '9876543220', status: 'pending', jobsCompleted: 18, verificationLevel: 'Silver', trustScore: 4.6, verifiedJobs: 16 },
+      { id: 202, workerName: 'Akhil Verma', skills: 'Electrical, Cable', rating: 4.4, experience: '4 years', phone: '9876543221', status: 'rejected', jobsCompleted: 10, verificationLevel: 'Bronze', trustScore: 4.4, verifiedJobs: 9 }
     ],
     3: [
-      { id: 301, workerName: 'Arjun Patel', skills: 'Painting, Decoration', rating: 4.5, experience: '7 years', phone: '9876543230', status: 'pending', jobsCompleted: 22 },
-      { id: 302, workerName: 'Ramesh Singh', skills: 'Painting', rating: 4.2, experience: '3 years', phone: '9876543231', status: 'pending', jobsCompleted: 8 }
+      { id: 301, workerName: 'Arjun Patel', skills: 'Painting, Decoration', rating: 4.5, experience: '7 years', phone: '9876543230', status: 'pending', jobsCompleted: 22, verificationLevel: 'Silver', trustScore: 4.5, verifiedJobs: 20 },
+      { id: 302, workerName: 'Ramesh Singh', skills: 'Painting', rating: 4.2, experience: '3 years', phone: '9876543231', status: 'pending', jobsCompleted: 8, verificationLevel: 'Bronze', trustScore: 4.2, verifiedJobs: 7 }
     ],
     4: [
-      { id: 401, workerName: 'Rajesh Kumar', skills: 'Heavy Machinery', rating: 4.8, experience: '12 years', phone: '9876543240', status: 'pending', jobsCompleted: 35 }
+      { id: 401, workerName: 'Rajesh Kumar', skills: 'Heavy Machinery', rating: 4.8, experience: '12 years', phone: '9876543240', status: 'pending', jobsCompleted: 35, verificationLevel: 'Gold', trustScore: 4.8, verifiedJobs: 33 }
     ]
   });
 
@@ -712,6 +713,16 @@ const ContractorDashboard = () => {
                   {/* Worker Info */}
                   <div>
                     <p style={{ fontWeight: 'bold', fontSize: '1.1rem', color: '#111827', marginBottom: '0.5rem' }}>👤 {applicant.workerName}</p>
+                    
+                    {/* Trust Badge */}
+                    <div style={{ marginBottom: '1rem' }}>
+                      <TrustBadge 
+                        level={applicant.verificationLevel} 
+                        trustScore={applicant.trustScore}
+                        verifiedJobs={applicant.verifiedJobs}
+                        size="small"
+                      />
+                    </div>
                     
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', fontSize: '0.9rem' }}>
                       <div>
