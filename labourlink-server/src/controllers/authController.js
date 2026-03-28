@@ -1,6 +1,6 @@
 import Worker from '../models/Worker.js';
 import Contractor from '../models/Contractor.js';
-import { hashPassword, generateToken, validateEmail, validatePhone } from '../utils/helpers.js';
+import { hashPassword, comparePassword, generateToken, validateEmail, validatePhone } from '../utils/helpers.js';
 
 // Register Worker
 export const registerWorker = async (req, res) => {
@@ -194,6 +194,3 @@ export const loginContractor = async (req, res) => {
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
 };
-
-// Import comparePassword
-import { comparePassword } from '../utils/helpers.js';
