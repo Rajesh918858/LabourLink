@@ -7,22 +7,28 @@ export const registerWorker = async (req, res) => {
   try {
     const { name, email, phone, password, location, primarySkill } = req.body;
 
+    console.log('Register Worker Request:', { name, email, phone });
+
     // Validation
     if (!name || !email || !phone || !password) {
+      console.log('Missing fields:', { name: !!name, email: !!email, phone: !!phone, password: !!password });
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
     if (!validateEmail(email)) {
+      console.log('Invalid email:', email);
       return res.status(400).json({ message: 'Invalid email format' });
     }
 
     if (!validatePhone(phone)) {
-      return res.status(400).json({ message: 'Invalid phone number format' });
+      console.log('Invalid phone:', phone);
+      return res.status(400).json({ message: 'Invalid phone number format (must be 10 digits starting with 6-9)' });
     }
 
     // Check if worker already exists
     const existingWorker = await Worker.findOne({ $or: [{ email }, { phone }] });
     if (existingWorker) {
+      console.log('Worker already exists with email or phone');
       return res.status(400).json({ message: 'Worker with this email or phone already exists' });
     }
 
@@ -38,6 +44,7 @@ export const registerWorker = async (req, res) => {
     });
 
     await worker.save();
+    console.log('Worker created successfully:', worker._id);
 
     // Generate token
     const token = generateToken(worker._id, 'worker');
@@ -54,7 +61,8 @@ export const registerWorker = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('Registration error:', error.message);
+    console.error('Error details:', error);
     res.status(500).json({ message: 'Error registering worker', error: error.message });
   }
 };
