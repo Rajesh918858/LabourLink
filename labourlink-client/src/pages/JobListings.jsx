@@ -2,6 +2,41 @@ import React, { useState } from 'react';
 
 const JobListings = () => {
   const [searchLocation, setSearchLocation] = useState('');
+  const [isListening, setIsListening] = useState(false);
+
+  // Voice Search Function
+  const startVoiceSearch = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+    if (!SpeechRecognition) {
+      alert('Voice search not supported in your browser. Use Chrome, Edge, or Safari.');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'hi-IN'; // Hindi language
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    setIsListening(true);
+
+    recognition.start();
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript.toLowerCase();
+      setSearchLocation(transcript);
+      setIsListening(false);
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Voice error:', event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+  };
 
   const jobCategories = {
     construction: {
@@ -455,24 +490,39 @@ const JobListings = () => {
               border: '2px solid #e5e7eb'
             }}
           />
-          {searchLocation && (
+          <div style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: '0.5rem' }}>
+            {searchLocation && (
+              <button
+                onClick={() => setSearchLocation('')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '1.25rem',
+                  cursor: 'pointer',
+                  color: '#6b7280'
+                }}
+              >
+                ✕
+              </button>
+            )}
             <button
-              onClick={() => setSearchLocation('')}
+              onClick={startVoiceSearch}
               style={{
-                position: 'absolute',
-                right: '0.75rem',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                background: 'none',
+                background: isListening ? '#ef4444' : '#2563eb',
+                color: 'white',
                 border: 'none',
-                fontSize: '1.25rem',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '0.375rem',
                 cursor: 'pointer',
-                color: '#6b7280'
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                transition: 'all 0.3s'
               }}
+              title="Click to speak or say job position / location"
             >
-              ✕
+              🎤 {isListening ? 'Listening...' : 'Voice'}
             </button>
-          )}
+          </div>
         </div>
       </div>
 
