@@ -6,7 +6,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import JobListings from './pages/JobListings';
 import WorkerDashboard from './pages/WorkerDashboard';
+import WorkerProfile from './pages/WorkerProfile';
 import ContractorDashboard from './pages/ContractorDashboard';
+import ContractorProfile from './pages/ContractorProfile';
 import Home from './pages/Home';
 
 function ProtectedRoute({ children, userType: requiredUserType }) {
@@ -41,12 +43,30 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/worker-profile"
+          element={
+            <ProtectedRoute userType="worker">
+              <WorkerProfile />
+            </ProtectedRoute>
+          }
+        />
         
         <Route
           path="/contractor-dashboard"
           element={
             <ProtectedRoute userType="contractor">
               <ContractorDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/contractor-profile"
+          element={
+            <ProtectedRoute userType="contractor">
+              <ContractorProfile />
             </ProtectedRoute>
           }
         />
