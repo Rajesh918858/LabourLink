@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Chat from './pages/Chat';
 import LocationBasedHiring from './pages/LocationBasedHiring';
 import Notifications from './pages/Notifications';
+import WorkerVerification from './pages/WorkerVerification';
 
 function ProtectedRoute({ children, userType: requiredUserType }) {
   const { isAuthenticated, userType } = useSelector(state => state.auth);
@@ -40,6 +41,7 @@ function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/nearby-workers" element={<LocationBasedHiring />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/worker-verification" element={<WorkerVerification />} />
         
         <Route
           path="/worker-dashboard"

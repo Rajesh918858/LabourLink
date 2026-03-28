@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import TrustBadge from '../components/TrustBadge';
 
 const LocationBasedHiring = () => {
   const { user, userType } = useSelector(state => state.auth);
@@ -9,16 +10,16 @@ const LocationBasedHiring = () => {
   const [selectedWorker, setSelectedWorker] = useState(null);
   const [showMap, setShowMap] = useState(true);
 
-  // Sample workers with location data
+  // Sample workers with location data + verification levels
   const [workers] = useState([
-    { id: 1, name: 'Raj Kumar', skill: 'Carpenter', rating: 4.8, distance: 1.2, lat: 28.6139, lng: 77.2090, jobsCompleted: 35, experience: '10 years', phone: '9876543210' },
-    { id: 2, name: 'Vikram Sharma', skill: 'Mason', rating: 4.7, distance: 2.1, lat: 28.6155, lng: 77.2115, jobsCompleted: 28, experience: '8 years', phone: '9876543211' },
-    { id: 3, name: 'Suresh Kumar', skill: 'Electrician', rating: 4.6, distance: 3.5, lat: 28.6200, lng: 77.2050, jobsCompleted: 24, experience: '9 years', phone: '9876543212' },
-    { id: 4, name: 'Prakash Singh', skill: 'Painter', rating: 4.5, distance: 1.8, lat: 28.6120, lng: 77.2120, jobsCompleted: 32, experience: '7 years', phone: '9876543213' },
-    { id: 5, name: 'Arjun Patel', skill: 'Plumber', rating: 4.4, distance: 4.2, lat: 28.6170, lng: 77.2080, jobsCompleted: 20, experience: '6 years', phone: '9876543214' },
-    { id: 6, name: 'Deepak Roy', skill: 'Carpenter', rating: 4.3, distance: 2.9, lat: 28.6180, lng: 77.2100, jobsCompleted: 18, experience: '5 years', phone: '9876543215' },
-    { id: 7, name: 'Mohan Singh', skill: 'Welder', rating: 4.9, distance: 3.1, lat: 28.6140, lng: 77.2140, jobsCompleted: 40, experience: '12 years', phone: '9876543216' },
-    { id: 8, name: 'Akhil Verma', skill: 'Electrician', rating: 4.2, distance: 2.5, lat: 28.6125, lng: 77.2095, jobsCompleted: 15, experience: '4 years', phone: '9876543217' },
+    { id: 1, name: 'Raj Kumar', skill: 'Carpenter', rating: 4.8, distance: 1.2, lat: 28.6139, lng: 77.2090, jobsCompleted: 35, experience: '10 years', phone: '9876543210', verificationLevel: 'Gold', trustScore: 4.8, verifiedJobs: 32 },
+    { id: 2, name: 'Vikram Sharma', skill: 'Mason', rating: 4.7, distance: 2.1, lat: 28.6155, lng: 77.2115, jobsCompleted: 28, experience: '8 years', phone: '9876543211', verificationLevel: 'Silver', trustScore: 4.7, verifiedJobs: 26 },
+    { id: 3, name: 'Suresh Kumar', skill: 'Electrician', rating: 4.6, distance: 3.5, lat: 28.6200, lng: 77.2050, jobsCompleted: 24, experience: '9 years', phone: '9876543212', verificationLevel: 'Silver', trustScore: 4.6, verifiedJobs: 22 },
+    { id: 4, name: 'Prakash Singh', skill: 'Painter', rating: 4.5, distance: 1.8, lat: 28.6120, lng: 77.2120, jobsCompleted: 32, experience: '7 years', phone: '9876543213', verificationLevel: 'Gold', trustScore: 4.5, verifiedJobs: 30 },
+    { id: 5, name: 'Arjun Patel', skill: 'Plumber', rating: 4.4, distance: 4.2, lat: 28.6170, lng: 77.2080, jobsCompleted: 20, experience: '6 years', phone: '9876543214', verificationLevel: 'Bronze', trustScore: 4.4, verifiedJobs: 18 },
+    { id: 6, name: 'Deepak Roy', skill: 'Carpenter', rating: 4.3, distance: 2.9, lat: 28.6180, lng: 77.2100, jobsCompleted: 18, experience: '5 years', phone: '9876543215', verificationLevel: 'Bronze', trustScore: 4.3, verifiedJobs: 16 },
+    { id: 7, name: 'Mohan Singh', skill: 'Welder', rating: 4.9, distance: 3.1, lat: 28.6140, lng: 77.2140, jobsCompleted: 40, experience: '12 years', phone: '9876543216', verificationLevel: 'Platinum', trustScore: 4.9, verifiedJobs: 38 },
+    { id: 8, name: 'Akhil Verma', skill: 'Electrician', rating: 4.2, distance: 2.5, lat: 28.6125, lng: 77.2095, jobsCompleted: 15, experience: '4 years', phone: '9876543217', verificationLevel: 'Bronze', trustScore: 4.2, verifiedJobs: 14 },
   ]);
 
   const categories = ['all', 'Carpenter', 'Mason', 'Electrician', 'Painter', 'Plumber', 'Welder'];
@@ -278,12 +279,12 @@ const LocationBasedHiring = () => {
                 boxShadow: selectedWorker?.id === worker.id ? '0 4px 8px rgba(0, 0, 0, 0.1)' : 'none'
               }}
             >
-              {/* Header */}
+              {/* Header with Trust Badge */}
               <div style={{ marginBottom: '1rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.5rem' }}>
-                  <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.75rem' }}>
+                  <div style={{ flex: 1 }}>
                     <p style={{ fontWeight: 'bold', fontSize: '1.1rem', color: '#111827' }}>{worker.name}</p>
-                    <p style={{ color: '#6b7280', fontSize: '0.9rem' }}>{worker.skill}</p>
+                    <p style={{ color: '#6b7280', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{worker.skill}</p>
                   </div>
                   <span style={{
                     backgroundColor: '#fef3c7',
@@ -291,11 +292,20 @@ const LocationBasedHiring = () => {
                     padding: '0.25rem 0.75rem',
                     borderRadius: '9999px',
                     fontSize: '0.85rem',
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    whiteSpace: 'nowrap',
+                    marginLeft: '0.5rem'
                   }}>
                     📍 {worker.distance} km
                   </span>
                 </div>
+                {/* Trust Badge */}
+                <TrustBadge 
+                  level={worker.verificationLevel} 
+                  trustScore={worker.trustScore}
+                  verifiedJobs={worker.verifiedJobs}
+                  size="small"
+                />
               </div>
 
               {/* Stats */}

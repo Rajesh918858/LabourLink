@@ -28,6 +28,7 @@ const Navbar = () => {
               <NotificationBell unreadCount={3} />
               <a href="/chat">💬 Chat</a>
               <a href="/nearby-workers">📍 Nearby Workers</a>
+              <a href="/worker-verification">🔐 Trust & Verification</a>
               {userType === 'worker' ? (
                 <>
                   <a href="/worker-dashboard">Dashboard</a>
