@@ -10,6 +10,9 @@ import WorkerProfile from './pages/WorkerProfile';
 import ContractorDashboard from './pages/ContractorDashboard';
 import ContractorProfile from './pages/ContractorProfile';
 import Home from './pages/Home';
+import Chat from './pages/Chat';
+import LocationBasedHiring from './pages/LocationBasedHiring';
+import Notifications from './pages/Notifications';
 
 function ProtectedRoute({ children, userType: requiredUserType }) {
   const { isAuthenticated, userType } = useSelector(state => state.auth);
@@ -34,6 +37,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/jobs" element={<JobListings />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/nearby-workers" element={<LocationBasedHiring />} />
+        <Route path="/notifications" element={<Notifications />} />
         
         <Route
           path="/worker-dashboard"

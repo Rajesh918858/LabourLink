@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../redux/slices/authSlice';
+import NotificationBell from './NotificationBell';
 
 const Navbar = () => {
   const { isAuthenticated, userType } = useSelector(state => state.auth);
@@ -24,6 +25,9 @@ const Navbar = () => {
           {isAuthenticated ? (
             <>
               <a href="/jobs">Jobs</a>
+              <NotificationBell unreadCount={3} />
+              <a href="/chat">💬 Chat</a>
+              <a href="/nearby-workers">📍 Nearby Workers</a>
               {userType === 'worker' ? (
                 <>
                   <a href="/worker-dashboard">Dashboard</a>
